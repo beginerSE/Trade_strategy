@@ -1,36 +1,26 @@
-rsi = talib.RSI(price, timeperiod=2)
-signal=[]
 
-for i in range(2028):
-    if rsi[i]>70:
-        signal.append(1)
-    elif rsi[i]<30:
-        signal.append(-1)
-    else:
-        signal.append(0)
-
-        
 ##累積リターンの計算
 
 from pylab import rcParams
 import matplotlib as mpl
+
+
+# プロットの初期設定を変更する
 font = {"family":"Noto Sans CJK JP"}
 mpl.rc('font', **font)
-
-
 rcParams['figure.figsize'] = 10,5
-returns3=((change[1:2028]*signal[0:2027])+1).cumprod()
-returns2=(change+1).cumprod()
-df2=pd.DataFrame({'hold':returns2,'trade':returns})
-df3=df2.fillna(method='ffill')
-y1=np.array(df3['hold'])
-y2=np.array(df3['trade'])
-#x=df.index
-x=df.index[0:2027]
 
+
+# ホールドのリターンを検証する
+returns2=(price.pct_change()+1).cumprod()
+returns3=cal_backtest(price,17,15,3,6)
+df=pd.DataFrame({'hold':returns2,'trade':returns3})
+df3=df.fillna(method='ffill')
+x=returns2[1:].index
+print(len(returns2),len(returns3))
+print(returns2.head())
 plt.title('トレードリターンの比較')
-
-plt.plot(x,returns2[0:2027],'b-',label='ホールドしてた場合のリターン',alpha=0.3,linewidth=1)
+plt.plot(x,returns2[1:],'b-',label='ホールドしてた場合のリターン',alpha=0.3,linewidth=1)
 plt.plot(x,returns3,'orange',label='RSIで取引した場合のリターン',alpha=1,linewidth=1.5)
 plt.ylabel('倍率')
 plt.grid(which='both')
@@ -44,7 +34,7 @@ plt.savefig('sample.png')
 
 #最大ドローダウンの計算
 dro=[]
-for i in range(2026):
+for i in range(len(returns3)):
     max=returns3[:i].max()
     drop=max-returns3[i]
     dro.append(drop)
@@ -78,4 +68,4 @@ print('ペイオフレシオ',winprice/loseprice*-1)
 #プロフィットファクターの計算方法：純利益÷純損失
 
 print('プロフィットファクター',sum(win)/sum(lose)*-1)
-print('リターン',returns3[2026])
+print('リターン',returns3[-1])
