@@ -5,7 +5,7 @@ def cal_backtest(price,mterm1=12,mterm2=26,mterm3=5,momterm=6):
     change=price.pct_change()
     hold_return=(change+1).cumprod()
     hold_return[0]=1
-    hold_return=trade_return*10000
+    hold_return=hold_return*10000
     momentam=talib.MOM(price,timeperiod=momterm)
     macd=talib.MACD(price,fastperiod=mterm1, slowperiod=mterm2,    signalperiod=mterm3)
     signal=[]
@@ -19,7 +19,7 @@ def cal_backtest(price,mterm1=12,mterm2=26,mterm3=5,momterm=6):
     ##累積リターンの計算##累積リターンの計算
     trade_returns=((change[1:]*signal[:-1])+1).cumprod()
     df=pd.DataFrame({'hold':hold_return,'trade':trade_returns})
-    df3=df2.fillna(method='ffill')
+    df3=df.fillna(method='ffill')
     y1=np.array(df3['hold'])
     y2=np.array(df3['trade'])
     x=price.index[0:len(price)-1]
