@@ -69,3 +69,9 @@ print('ペイオフレシオ',winprice/loseprice*-1)
 
 print('プロフィットファクター',sum(win)/sum(lose)*-1)
 print('リターン',returns3[-1])
+
+
+# 年次リターンを計算する
+for i in ['2013','2014','2015','2016','2017','2018','2019']:
+    returns_year=returns3[i+'-01-01':i+'-12-31']
+    print(i+'年のリターン :',str((returns_year[-1]-returns_year[0])/returns_year[0]*100)+'%')
