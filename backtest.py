@@ -18,16 +18,11 @@ def cal_backtest(price,mterm1=12,mterm2=26,mterm3=5,momterm=6):
             signal.append(0)
     ##累積リターンの計算##累積リターンの計算
     trade_returns=((change[1:]*signal[:-1])+1).cumprod()
-    df=pd.DataFrame({'hold':hold_return,'trade':trade_returns})
-    df3=df.fillna(method='ffill')
-    y1=np.array(df3['hold'])
-    y2=np.array(df3['trade'])
-    x=price.index[0:len(price)-1]
-    return trade_returns[-1]
+    return trade_returns
 
  
 # 試しにバックテスト関数を実行する
-cal_backtest(price,mterm1=12,mterm2=26,mterm3=5,momterm=6)
+cal_backtest(price,mterm1=12,mterm2=26,mterm3=5,momterm=6)[-1]
 
 
 # グリッドサーチ的な感じで最適場パラメーターを発見する
@@ -36,7 +31,7 @@ for i in range(2,21):
     for r in range(2,21):
         for e in range(5,26):
             for f in range(6,31):
-                returns.append([cal_backtest(price,mterm1=i,mterm2=r,mterm3=int(e),momterm=int(f)),i,r,e,f])
+                returns.append([cal_backtest(price,mterm1=i,mterm2=r,mterm3=int(e),momterm=int(f))[-1],i,r,e,f])
                 print(returns[-1])
 
 backtest_data = pd.DataFrame(returns)
