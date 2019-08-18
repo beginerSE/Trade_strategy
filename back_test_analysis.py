@@ -1,13 +1,14 @@
 
-##累積リターンの計算
-
+# 累積リターンの計算
 from pylab import rcParams
 import matplotlib as mpl
 
 
-# プロットの初期設定を変更する(日本語化設定している人はスルーしてください)
+# matplotlibの日本語化(日本語化設定している人はスルーしてください)
 font = {"family":"Noto Sans CJK JP"}
 mpl.rc('font', **font)
+
+# Matplotlibのグラフの大きさを変更する
 rcParams['figure.figsize'] = 10,5
 
 
