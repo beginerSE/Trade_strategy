@@ -36,7 +36,7 @@ for i in range(2,21):
     for r in range(2,21):
         for e in range(5,26):
             for f in range(6,31):
-                returns.append([cal_backtest(price,mterm1=e,mterm2=f,mterm3=int(i),momterm=int(r)),i,r,e,f])
+                returns.append([cal_backtest(price,mterm1=i,mterm2=r,mterm3=int(e),momterm=int(f)),i,r,e,f])
                 print(returns[-1])
 
 backtest_data = pd.DataFrame(returns)
