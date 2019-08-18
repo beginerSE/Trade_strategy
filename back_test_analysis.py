@@ -75,3 +75,16 @@ print('リターン',returns3[-1])
 for i in ['2013','2014','2015','2016','2017','2018','2019']:
     returns_year=returns3[i+'-01-01':i+'-12-31']
     print(i+'年の年次リターン :',str((returns_year[-1]-returns_year[0])/returns_year[0]*100)+'%')
+
+
+# 月次リターンを計算する
+month_return=[]
+for i in ['2013','2014','2015','2016','2017','2018','2019']:
+    for v in [[1,31],[2,28],[3,31],[4,30],[5,31],[6,30],[7,31],[8,31],[9,30],[10,31],[11,30],[12,31]]:
+        try:
+            returns_month=returns3[i+'-'+str(v[0])+'-01':i+'-'+str(v[0])+'-'+str(v[1])]
+            print(i+'年'+str(v[0])+'月の月次リターン :',str((returns_month[-1]-returns_month[0])/returns_month[0]*100)+'%')
+            month_return.append([i,v[0],(returns_month[-1]-returns_month[0])/returns_month[0]*100])
+        except:
+            pass
+
