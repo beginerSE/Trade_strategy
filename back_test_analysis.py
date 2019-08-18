@@ -5,7 +5,7 @@ from pylab import rcParams
 import matplotlib as mpl
 
 
-# プロットの初期設定を変更する
+# プロットの初期設定を変更する(日本語化設定している人はスルーしてください)
 font = {"family":"Noto Sans CJK JP"}
 mpl.rc('font', **font)
 rcParams['figure.figsize'] = 10,5
@@ -21,7 +21,7 @@ print(len(returns2),len(returns3))
 print(returns2.head())
 plt.title('トレードリターンの比較')
 plt.plot(x,returns2[1:],'b-',label='ホールドしてた場合のリターン',alpha=0.3,linewidth=1)
-plt.plot(x,returns3,'orange',label='RSIで取引した場合のリターン',alpha=1,linewidth=1.5)
+plt.plot(x,returns3,'orange',label='トレード戦略に沿って取引した場合のリターン',alpha=1,linewidth=1.5)
 plt.ylabel('倍率')
 plt.grid(which='both')
 plt.legend()
